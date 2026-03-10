@@ -11,16 +11,17 @@ from src.simulator import run_qasm, run_with_noise
 from src.utils import compute_fidelity, save_results, plot_graph
 
 
-def experiment_noise_vs_fidelity(shots=1024):
+def experiment_noise_vs_fidelity(shots=8192):
     """
     Experiment 1: How does noise level affect fidelity?
-    Sweeps depolarizing noise from 0.0 to 0.1
+    Uses theta=pi/3 (theoretical prob=0.25) for clearer signal.
+    Sweeps depolarizing noise from 0.0 to 0.3
     """
     print("Running Experiment 1: Noise vs Fidelity...")
 
-    noise_levels = [0.0, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.10]
+    noise_levels = [0.0, 0.02, 0.04, 0.06, 0.08, 0.10, 0.15, 0.20, 0.25, 0.30]
     fidelities = []
-    theta = np.pi / 2  # fixed state for fair comparison
+    theta = np.pi / 3  # theoretical prob = sin(pi/6)^2 = 0.25
 
     for noise in noise_levels:
         qc, _ = create_teleportation_circuit(state_angle_theta=theta)
@@ -33,8 +34,6 @@ def experiment_noise_vs_fidelity(shots=1024):
         print(f"  noise={noise:.2f} -> fidelity={fidelity:.4f}")
 
     return noise_levels, fidelities
-
-
 def experiment_shots_vs_fidelity():
     """
     Experiment 2: How does number of shots affect fidelity stability?
