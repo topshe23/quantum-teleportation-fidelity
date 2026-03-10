@@ -45,11 +45,16 @@ hardware.
 
 | Noise Level | Fidelity |
 |---|---|
-| 0.00 | 0.9979 |
-| 0.05 | 0.9033 |
-| 0.10 | 0.8873 |
-| 0.20 | 0.8081 |
-| 0.30 | 0.7765 |
+| 0.00 | 0.9968 |
+| 0.02 | 0.9751 |
+| 0.04 | 0.9419 |
+| 0.06 | 0.9174 |
+| 0.08 | 0.9064 |
+| 0.10 | 0.8875 |
+| 0.15 | 0.8359 |
+| 0.20 | 0.8192 |
+| 0.25 | 0.7867 |
+| 0.30 | 0.7725 |
 
 The drop is sharpest in the 0–6% range, then starts to flatten. My
 guess is that once noise is high enough, the circuit is already
