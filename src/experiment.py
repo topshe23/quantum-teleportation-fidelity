@@ -8,8 +8,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from src.circuit import create_teleportation_circuit
 from src.simulator import run_qasm, run_with_noise
-from src.utils import compute_fidelity, save_results, plot_graph
-
+from src.utils import compute_fidelity, save_results
 
 def experiment_noise_vs_fidelity(shots=8192):
     """
@@ -82,45 +81,30 @@ if __name__ == "__main__":
     shot_counts, fidelities_shots = experiment_shots_vs_fidelity()
     thetas, fidelities_theta = experiment_theta_vs_fidelity()
 
-    # --- Save CSV ---
+    # --- Save all results to CSV ---
     save_results(
-        {'noise_level': noise_levels, 'fidelity': fidelities_noise},
-        'results/data/results.csv'
+        {'noise_level': noise_levels, 'fidelity_noise': fidelities_noise},
+        'results/data/noise_results.csv'
+    )
+    save_results(
+        {'shots': shot_counts, 'fidelity_shots': fidelities_shots},
+        'results/data/shots_results.csv'
+    )
+    save_results(
+        {'theta': [round(t, 4) for t in thetas], 'fidelity_theta': fidelities_theta},
+        'results/data/theta_results.csv'
     )
 
-    # --- Plot 1: Noise vs Fidelity ---
-    plot_graph(
-        x=noise_levels,
-        y=fidelities_noise,
-        xlabel='Depolarizing Noise Level',
-        ylabel='Fidelity',
-        title='Noise vs Fidelity — Quantum Teleportation',
-        save_path='results/plots/noise_vs_fidelity.png',
-        color='steelblue'
-    )
+    # --- Generate beautiful plots ---
+    from src.utils import plot_noise_vs_fidelity, plot_shots_vs_fidelity, plot_theta_vs_fidelity
 
-    # --- Plot 2: Shots vs Fidelity ---
-    plot_graph(
-        x=shot_counts,
-        y=fidelities_shots,
-        xlabel='Number of Shots',
-        ylabel='Fidelity',
-        title='Shots vs Fidelity — Quantum Teleportation',
-        save_path='results/plots/shots_vs_fidelity.png',
-        color='darkorange'
-    )
-
-    # --- Plot 3: Theta vs Fidelity ---
-    plot_graph(
-        x=[round(t, 3) for t in thetas],
-        y=fidelities_theta,
-        xlabel='Input State Angle Theta (radians)',
-        ylabel='Fidelity',
-        title='Input State vs Fidelity — Quantum Teleportation',
-        save_path='results/plots/theta_vs_fidelity.png',
-        color='seagreen'
-    )
+    plot_noise_vs_fidelity(noise_levels, fidelities_noise,
+                           'results/plots/noise_vs_fidelity.png')
+    plot_shots_vs_fidelity(shot_counts, fidelities_shots,
+                           'results/plots/shots_vs_fidelity.png')
+    plot_theta_vs_fidelity(thetas, fidelities_theta,
+                           'results/plots/theta_vs_fidelity.png')
 
     print("\nAll experiments done!")
-    print("CSV saved to results/data/results.csv")
+    print("CSVs saved to results/data/")
     print("Plots saved to results/plots/")
