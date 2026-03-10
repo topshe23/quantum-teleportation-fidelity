@@ -107,4 +107,4 @@ python src/circuit.py
 Results land in `results/data/` and plots in `results/plots/`.
 
 ## Stack
-Python 3.10 · Qiskit 3.2.0 · Qiskit Aer · NumPy · Matplotlib · Pandas
+Python 3.10 · Qiskit 2.3.0 · Qiskit Aer · NumPy · Matplotlib · Pandas
